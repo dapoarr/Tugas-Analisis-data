@@ -1,0 +1,6 @@
+Local URL: http://localhost:8501
+  Network URL: http://192.168.100.250:8501
+
+  https://github.com/dapoarr/Tugas-Analisis-data
+  
+  link deploy : https://jhiwnj6anapv8agzpkd4vd.streamlit.app/
