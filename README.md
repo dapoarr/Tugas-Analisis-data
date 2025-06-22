@@ -26,10 +26,10 @@ Proyek ini merupakan dashboard interaktif untuk analisis kualitas udara di Beiji
 ## Cara Menjalankan
 
 1. **Clone repository:**
-   ```
-   git clone : https://jhiwnj6anapv8agzpkd4vd.streamlit.app/
-   cd Dashboard-Kualitas-Udara---Beijing-
-   ```
+  ```
+git clone https://github.com/dapoarr/Tugas-Analisis-data.git
+cd Tugas-Analisis-data
+```
 
 2. **Install dependencies:**
    ```
