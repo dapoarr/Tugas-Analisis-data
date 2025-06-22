@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dashboard Kualitas Udara - Beijing
 
 Proyek ini merupakan dashboard interaktif untuk analisis kualitas udara di Beijing menggunakan data PM2.5 dan variabel cuaca lainnya. Dashboard dibangun dengan Python, pandas, seaborn, matplotlib, dan Streamlit.
@@ -61,3 +62,7 @@ Proyek ini bebas digunakan untuk keperluan pembelajaran dan non-komersial.
 
 **Dikembangkan oleh:**
 M Dafa Ar Rasyid
+=======
+# Tugas-Analisis-data
+Project Data Analisys kualitas udara, untuk memenuhi materi Coding camp
+>>>>>>> 646496085b98a00ac150b8b8ff2d1caee6425bde
