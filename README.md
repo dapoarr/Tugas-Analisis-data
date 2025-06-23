@@ -37,7 +37,7 @@ cd Tugas-Analisis-data
 
 3. **Jalankan dashboard:**
    ```
-   streamlit run main_analysis_dashboard.py
+   streamlit run dashboard/dashboard.py
    ```
 
 4. **Akses dashboard di browser** pada alamat yang tertera di terminal.
