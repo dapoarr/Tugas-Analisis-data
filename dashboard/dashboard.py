@@ -45,8 +45,11 @@ elif agg_option == "Mingguan":
 else:
     df_agg = df_filtered["PM2.5"].resample("M").mean()
 
-st.subheader(f"Tren Rata-rata PM2.5 ({agg_option})")
-st.line_chart(df_agg)
+if not df_agg.empty:
+    st.subheader(f"Tren Rata-rata PM2.5 ({agg_option})")
+    st.line_chart(df_agg)
+else:
+    st.warning("Data tidak tersedia untuk filter yang dipilih.")
 
 # Boxplot per bulan
 st.subheader("Distribusi PM2.5 per Bulan")
