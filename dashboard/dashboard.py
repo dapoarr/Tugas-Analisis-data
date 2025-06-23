@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load data
-df = pd.read_csv("dashboard/main_data.csv")
+df = pd.read_csv("main_data.csv")
 df["datetime"] = pd.to_datetime(df["datetime"])
 
 # Sidebar filter
