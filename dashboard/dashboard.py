@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load data
-df = pd.read_csv("main_data.csv")
+df = pd.read_csv("D:\submission\dashboard\main_data.csv")
 df["datetime"] = pd.to_datetime(df["datetime"])
 
 # Sidebar filter
@@ -14,9 +14,18 @@ date_max = df["datetime"].max()
 date_range = st.sidebar.date_input("Pilih Rentang Tanggal", [date_min, date_max])
 agg_option = st.sidebar.selectbox("Agregasi Waktu", ["Harian", "Mingguan", "Bulanan"])
 
-df_filtered = df[(df["station"] == station) &
-                 (df["datetime"] >= pd.to_datetime(date_range[0])) &
-                 (df["datetime"] <= pd.to_datetime(date_range[1]))].copy()
+df_filtered = df.copy()
+if len(date_range) == 2:
+    start_date = pd.to_datetime(date_range[0])
+    end_date = pd.to_datetime(date_range[1])
+else:
+    start_date = end_date = pd.to_datetime(date_range[0])
+
+df_filtered = df[
+    (df["station"] == station) &
+    (df["datetime"] >= start_date) &
+    (df["datetime"] <= end_date)
+].copy()
 
 # Judul
 st.title("Dashboard Kualitas Udara - Beijing")
@@ -27,19 +36,21 @@ st.subheader("Statistik Deskriptif Lengkap")
 st.write(df_filtered.describe(include="all").T)
 
 # Agregasi waktu
+df_filtered = df_filtered.set_index("datetime")  # Pastikan index datetime
+
 if agg_option == "Harian":
-    df_agg = df_filtered.resample("D", on="datetime")["PM2.5"].mean()
+    df_agg = df_filtered["PM2.5"].resample("D").mean()
 elif agg_option == "Mingguan":
-    df_agg = df_filtered.resample("W", on="datetime")["PM2.5"].mean()
+    df_agg = df_filtered["PM2.5"].resample("W").mean()
 else:
-    df_agg = df_filtered.resample("M", on="datetime")["PM2.5"].mean()
+    df_agg = df_filtered["PM2.5"].resample("M").mean()
 
 st.subheader(f"Tren Rata-rata PM2.5 ({agg_option})")
 st.line_chart(df_agg)
 
 # Boxplot per bulan
 st.subheader("Distribusi PM2.5 per Bulan")
-df_filtered["month"] = df_filtered["datetime"].dt.month
+df_filtered["month"] = df_filtered.index.month  # Tambahkan kolom bulan 
 fig2, ax2 = plt.subplots()
 sns.boxplot(data=df_filtered, x="month", y="PM2.5", ax=ax2)
 ax2.set_xlabel("Bulan")
