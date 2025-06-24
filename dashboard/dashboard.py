@@ -3,6 +3,13 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# Setel tema visual
+st.set_page_config(
+    page_title="Dashboard Kualitas Udara - Beijing",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Load data dari dua file di folder dataset (relative path, gunakan slash)
 # Pastikan jalankan dari folder 'submission' atau sesuaikan path jika perlu
 df1 = pd.read_csv("dataset/data_1.csv")
@@ -23,6 +30,25 @@ date_max = df["datetime"].max().date()
 date_range = st.sidebar.date_input("Pilih Rentang Tanggal", [date_min, date_max])
 agg_option = st.sidebar.selectbox("Agregasi Waktu", ["Harian", "Mingguan", "Bulanan"])
 
+# Validasi input tanggal
+if len(date_range) < 2:
+    st.warning("Silakan pilih rentang tanggal (start date dan end date) terlebih dahulu.")
+    st.stop()
+else:
+    start_date = pd.to_datetime(date_range[0])
+    end_date = pd.to_datetime(date_range[1])
+
+df_filtered = df[
+    (df["station"] == station) &
+    (df["datetime"] >= start_date) &
+    (df["datetime"] <= end_date)
+].copy()
+
+# Jika data tidak ada setelah filter, tampilkan pesan
+if df_filtered.empty:
+    st.warning("Tidak ada data yang sesuai dengan filter yang dipilih.")
+    st.stop()
+
 # Filter data sesuai pilihan
 start_date = pd.to_datetime(date_range[0])
 end_date = pd.to_datetime(date_range[1])
@@ -35,6 +61,16 @@ df_filtered = df[
 # Judul
 st.title("Dashboard Kualitas Udara - Beijing")
 st.write(f"Data dari stasiun **{station}** dengan jumlah data: {len(df_filtered)}")
+
+#Fitur try-except 
+#try:
+#    start_date = pd.to_datetime(date_range[0])
+#    end_date = pd.to_datetime(date_range[1])
+#except Exception as e:
+#   st.warning("Tanggal tidak valid, gunakan rentang tanggal yang benar.")
+#    start_date = df["datetime"].min()
+#    end_date = df["datetime"].max()
+
 
 # Statistik Deskriptif
 #st.subheader("Statistik Deskriptif")
